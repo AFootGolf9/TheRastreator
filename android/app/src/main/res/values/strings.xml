@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">The Rastreator</string>
+    <string name="turn">Turn On/Off</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="disabled">Disabled</string>
+</resources>
