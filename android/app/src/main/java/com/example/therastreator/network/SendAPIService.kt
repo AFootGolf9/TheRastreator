@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 
 private const val BASE_URL =
-    "http://192.168.0.108:8080"
+    "http://192.168.0.109:8080"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
@@ -21,7 +21,7 @@ interface SendAPIService {
     suspend fun getTest(): String
 
     @POST("location")
-    suspend fun postLocation(@Body body: LocationJson): Boolean
+    suspend fun postLocation(@Body body: LocationJson): String
 }
 
 object SendApi {

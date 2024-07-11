@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 
 	"AFootGolf9/TheRastreator/db"
@@ -17,6 +19,7 @@ func GetLocationRegisters(c *gin.Context) {
 func InsertLocationRegister(c *gin.Context) {
 	var location entity.LocationRegister
 	c.BindJSON(&location)
+	fmt.Print(location)
 	repository.InsertLocationRegister(location.Latitude, location.Longitude)
 	c.JSON(200, gin.H{
 		"status": "Location registered successfully!",

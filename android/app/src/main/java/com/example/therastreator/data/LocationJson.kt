@@ -2,6 +2,6 @@ package com.example.therastreator.data
 
 import java.sql.Timestamp
 
-class LocationJson (lat: Double,  long: Double, time: Timestamp = Timestamp(0)){
+class LocationJson (latitude: Double,  longitude: Double, position_time: Timestamp = Timestamp(0)){
 
 }

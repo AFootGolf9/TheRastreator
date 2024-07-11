@@ -22,6 +22,7 @@ import com.example.therastreator.network.SendApi
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.Tasks
 
 class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
@@ -41,9 +42,11 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
             return Result.failure()
         }
 
-        var location = locationClient.getCurrentLocation(
+        val task = locationClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token,
-        ).getResult()
+        )
+        Tasks.await(task)
+        val location = task.getResult()
         SendApi.retrofitService
             .postLocation(LocationJson(location.latitude, location.longitude))
         return Result.success()
