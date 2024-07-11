@@ -1,4 +1,7 @@
 package com.example.therastreator.data
 
-class LocationJson {
+import java.sql.Timestamp
+
+class LocationJson (lat: Double,  long: Double, time: Timestamp = Timestamp(0)){
+
 }

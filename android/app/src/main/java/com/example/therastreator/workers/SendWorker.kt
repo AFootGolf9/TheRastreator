@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -16,11 +17,11 @@ import com.example.therastreator.NOTIFICATION_TITLE
 import com.example.therastreator.R
 import com.example.therastreator.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
 import com.example.therastreator.VERBOSE_NOTIFICATION_CHANNEL_NAME
-import com.example.therastreator.workers.BgLocationWorker.Companion
+import com.example.therastreator.data.LocationJson
+import com.example.therastreator.network.SendApi
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import java.net.URL
 
 class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
@@ -39,16 +40,12 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
         ) {
             return Result.failure()
         }
-        locationClient.getCurrentLocation(
+
+        var location = locationClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token,
-        ).addOnSuccessListener { location ->
-            location?.let {
-                Log.d(
-                    SendWorker.TAG,
-                    "Current Location = [lat : ${location.latitude}, lng : ${location.longitude}]",
-                )
-            }
-        }
+        ).getResult()
+        SendApi.retrofitService
+            .postLocation(LocationJson(location.latitude, location.longitude))
         return Result.success()
     }
 
