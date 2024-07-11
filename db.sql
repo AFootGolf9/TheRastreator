@@ -5,6 +5,6 @@ create table log(
 
 create table position(
     position_time timestamp not null default now(),
-    lat numeric(7, 5) not null,
-    long numeric(8, 5) not null)
+    lat numeric(9, 7) not null,
+    long numeric(10, 7) not null)
 ;

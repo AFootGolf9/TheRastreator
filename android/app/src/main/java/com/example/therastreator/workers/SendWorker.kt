@@ -48,7 +48,7 @@ class SendWorker(context: Context, params: WorkerParameters) : CoroutineWorker(c
         Tasks.await(task)
         val location = task.getResult()
         SendApi.retrofitService
-            .postLocation(LocationJson(location.latitude, location.longitude))
+            .postLocation(LocationJson(location.latitude, location.longitude, null))
         return Result.success()
     }
 
