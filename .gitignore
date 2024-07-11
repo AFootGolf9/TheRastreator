@@ -57,4 +57,4 @@ go.work
 go.work.sum
 
 
-config.yml
+serv/config.yml
