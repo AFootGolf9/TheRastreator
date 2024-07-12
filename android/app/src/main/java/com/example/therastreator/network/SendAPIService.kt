@@ -4,7 +4,6 @@ import com.example.therastreator.data.LocationJson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -17,9 +16,6 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface SendAPIService {
-    @GET("test")
-    suspend fun getTest(): String
-
     @POST("location")
     suspend fun postLocation(@Body body: LocationJson): String
 }
