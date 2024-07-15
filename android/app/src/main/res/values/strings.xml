@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">The Rastreator</string>
     <string name="turn">Turn On/Off</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="disabled">Disabled</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <string name="loginOp">Register or Login</string>
+    <string name="back_button">back_button</string>
 </resources>
