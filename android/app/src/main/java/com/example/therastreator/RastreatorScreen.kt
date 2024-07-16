@@ -21,12 +21,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.therastreator.ui.AppViewModel
+import com.example.therastreator.ui.LoginScreen
 import com.example.therastreator.ui.SelectScreen
 
 enum class RastreatorScreen(@StringRes val title: Int) {
@@ -64,10 +66,10 @@ fun RastreatorAppBar(
 
 @Composable
 fun RastreatorApp(
-    viewModel: AppViewModel = AppViewModel(LocalContext.current),
+    viewModel: AppViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-
+    viewModel.doFirst(LocalContext.current)
     val backStackEntry by  navController.currentBackStackEntryAsState()
 
     val currentScreen = RastreatorScreen.valueOf(
@@ -86,7 +88,7 @@ fun RastreatorApp(
 
         NavHost(
             navController = navController,
-            startDestination = RastreatorScreen.Select.name,
+            startDestination = RastreatorScreen.Login.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -96,6 +98,17 @@ fun RastreatorApp(
                 SelectScreen(
                     b = uiState.activated,
                     buttonPress = { viewModel.changeActivated() }
+                )
+            }
+            composable(route = RastreatorScreen.Login.name) {
+                LoginScreen(
+                    uiState,
+                    { tx -> viewModel.changeUser(tx) },
+                    { tx -> viewModel.changePass(tx) },
+                    { if (viewModel.submitLogin()){
+                        navController.navigate(RastreatorScreen.Select.name)
+                    }
+                    }
                 )
             }
         }

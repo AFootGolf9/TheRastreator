@@ -1,6 +1,7 @@
 package com.example.therastreator.ui
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -22,18 +23,21 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 
 lateinit var configRepository: ConfigRepository
 
-class AppViewModel(context: Context) : ViewModel() {
+class AppViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AppUiState())
     val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
 
-    private val sendRepository = WorkManagerSendRepository(context)
+    private lateinit var sendRepository: WorkManagerSendRepository
 
-    init {
+    fun doFirst(context: Context) {
         configRepository = ConfigRepository(context.dataStore)
         runBlocking {
-            _uiState.value = AppUiState(activated = configRepository.isOn.first())
+            _uiState.update { currentState ->
+                currentState.copy(activated = configRepository.isOn.first())
+            }
         }
+        sendRepository = WorkManagerSendRepository(context)
     }
 
     fun changeActivated() {
@@ -48,6 +52,26 @@ class AppViewModel(context: Context) : ViewModel() {
         runBlocking {
             configRepository.savePreference(_uiState.value.activated)
         }
+    }
+
+    fun changeUser(user: String) {
+        _uiState.update { currentState ->
+            currentState.copy(user = user)
+        }
+    }
+
+    fun changePass(pass: String) {
+        _uiState.update { currentState ->
+            currentState.copy(pass = pass)
+        }
+        Log.d("tag", pass)
+    }
+
+    fun submitLogin(): Boolean {
+        _uiState.update { currentState ->
+            currentState.copy(user = "", pass = "")
+        }
+        return true
     }
 
 }
