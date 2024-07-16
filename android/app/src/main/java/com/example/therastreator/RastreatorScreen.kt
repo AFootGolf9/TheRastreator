@@ -21,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -87,14 +86,17 @@ fun RastreatorApp(
 
         NavHost(
             navController = navController,
-            startDestination = RastreatorScreen.Login.name,
+            startDestination = RastreatorScreen.Select.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
             composable(route = RastreatorScreen.Select.name) {
-                SelectScreen(b = uiState.activated)
+                SelectScreen(
+                    b = uiState.activated,
+                    buttonPress = { viewModel.changeActivated() }
+                )
             }
         }
     }

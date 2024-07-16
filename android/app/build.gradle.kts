@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.play.services.location)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

@@ -1,5 +1,5 @@
-package com.example.therastreator.data
+package com.example.therastreator.ui
 
-class AppUiState(
+data class AppUiState(
     val activated: Boolean = false
 )

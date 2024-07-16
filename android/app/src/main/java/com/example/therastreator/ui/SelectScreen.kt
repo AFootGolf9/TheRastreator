@@ -3,19 +3,12 @@ package com.example.therastreator.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,29 +23,23 @@ import com.example.therastreator.R
     showBackground = true,
     showSystemUi = true)
 @Composable
-fun SelectScreen(b: Boolean = false) {
+fun SelectScreen(
+    b: Boolean = false,
+    buttonPress: () -> Unit = {}
+) {
     AppBody(modifier = Modifier
         .fillMaxSize()
         .wrapContentSize(),
-        b = b)
+        b = b,
+        buttonPress = buttonPress)
 }
 
 @Composable
-fun UpperBar(modifier: Modifier = Modifier) {
-    Surface(color = Color.Blue, modifier = modifier.fillMaxWidth()) {
-        Column {
-            Spacer(modifier = Modifier.height(28.dp))
-            Text(
-                text = stringResource(R.string.app_name),
-                fontSize = 36.sp,
-                modifier = modifier.padding(8.dp),
-            )
-        }
-    }
-}
-
-@Composable
-fun AppBody(modifier: Modifier = Modifier, b: Boolean) {
+fun AppBody(
+    modifier: Modifier = Modifier,
+    b: Boolean,
+    buttonPress: () -> Unit
+) {
 
     val color = when (b) {
         false -> Color.Red
@@ -69,7 +56,7 @@ fun AppBody(modifier: Modifier = Modifier, b: Boolean) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = {
-
+            buttonPress()
         },
             colors = ButtonColors(color, Color.White, Color.LightGray, Color.DarkGray)
         ) {
