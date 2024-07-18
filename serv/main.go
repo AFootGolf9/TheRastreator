@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"AFootGolf9/TheRastreator/controller"
 	"AFootGolf9/TheRastreator/db"
 	"AFootGolf9/TheRastreator/entity"
 	"AFootGolf9/TheRastreator/logger"
@@ -24,6 +25,21 @@ func InsertLocationRegister(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status": "Location registered successfully!",
 	})
+}
+
+func Autenticate(c *gin.Context) {
+	var user entity.UserJson
+	c.BindJSON(&user)
+	if controller.ValidateUser(user.User, user.Pass) {
+		token := repository.NewToken(repository.GetUserIdByName(user.User))
+		c.JSON(200, gin.H{
+			"token": token,
+		})
+	} else {
+		c.JSON(401, gin.H{
+			"error": "Invalid credentials",
+		})
+	}
 }
 
 func main() {

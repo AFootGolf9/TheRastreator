@@ -8,3 +8,25 @@ create table position(
     lat numeric(9, 7) not null,
     long numeric(10, 7) not null)
 ;
+
+create table client(
+id int primary key,
+username varchar(25) unique,
+email varchar(255) unique,
+password varchar(100)
+);
+
+create sequence client_id_seq;
+alter table client alter column id set default nextval('client_id_seq');
+
+create table token(
+    token varchar(255) not null unique,
+    client_id int not null,
+    time timestamp default now(),
+    foreign key (client_id) references client(id)
+);
+
+
+grant select on all tables in schema public to expl;
+grant insert on all tables in schema public to expl;
+grant update on all tables in schema public to expl;

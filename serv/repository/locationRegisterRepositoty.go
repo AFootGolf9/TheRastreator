@@ -2,14 +2,7 @@ package repository
 
 import (
 	"AFootGolf9/TheRastreator/entity"
-	"database/sql"
 )
-
-var db *sql.DB
-
-func SetDB(database *sql.DB) {
-	db = database
-}
 
 func InsertLocationRegister(latitude float64, longitude float64) {
 	_, err := db.Exec("INSERT INTO position (lat, long) VALUES ($1, $2)", latitude, longitude)
