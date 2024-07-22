@@ -29,7 +29,7 @@ func GetLocationRegisters() []*entity.LocationRegister {
 		if err != nil {
 			panic(err)
 		}
-		location := entity.NewLocationRegister(t, c, lat, long)
+		location := entity.NewLocationRegister(t, lat, long)
 		locations = append(locations, location)
 	}
 
@@ -55,7 +55,7 @@ func GetLocationRegisterById(id int) []*entity.LocationRegister {
 			panic(err)
 		}
 
-		location := entity.NewLocationRegister(t, c, lat, long)
+		location := entity.NewLocationRegister(t, lat, long)
 		locations = append(locations, location)
 	}
 

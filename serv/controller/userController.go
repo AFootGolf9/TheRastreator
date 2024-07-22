@@ -55,11 +55,3 @@ func NewUser(c *gin.Context) {
 		"status": "User created successfully!",
 	})
 }
-
-func getTokenInfo(token string) int {
-	client := repository.GetClientByToken(token)
-	if client == 0 {
-		return 0
-	}
-	return client
-}
