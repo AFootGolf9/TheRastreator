@@ -1,8 +1,11 @@
 package entity
 
-import "AFootGolf9/TheRastreator/util"
+import (
+	"AFootGolf9/TheRastreator/util"
+)
 
 type UserJson struct {
+	Id    int    `json:"id"`
 	User  string `json:"user"`
 	Email string `json:"email"`
 	Pass  string `json:"pass"`

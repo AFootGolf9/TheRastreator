@@ -7,5 +7,5 @@ func Encript(pass string) string {
 }
 
 func RandomToken() string {
-	return "token"
+	return "token2"
 }
