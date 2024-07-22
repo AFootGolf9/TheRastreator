@@ -3,6 +3,7 @@ package controller
 import (
 	"AFootGolf9/TheRastreator/entity"
 	"AFootGolf9/TheRastreator/repository"
+	"AFootGolf9/TheRastreator/util"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ func validateUser(user string, pass string) bool {
 	if userDB == nil {
 		return false
 	}
-	return userDB.ValidatePass(pass)
+	return util.ComparePass(userDB.Pass, pass)
 }
 
 func Autenticate(c *gin.Context) {
