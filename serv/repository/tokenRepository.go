@@ -3,6 +3,7 @@ package repository
 import (
 	"AFootGolf9/TheRastreator/util"
 	"fmt"
+	"time"
 )
 
 func NewToken(client int) string {
@@ -16,14 +17,20 @@ func NewToken(client int) string {
 }
 
 func GetClientByToken(token string) int {
-	row := db.QueryRow("SELECT client_id FROM token WHERE token = $1", token)
+	row := db.QueryRow("SELECT client_id, time FROM token WHERE token = $1", token)
 
+	var t time.Time
 	var client int
-	err := row.Scan(&client)
+	err := row.Scan(&client, &t)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
 			return 0
 		}
+	}
+
+	if t.Add(time.Hour * 24).Before(time.Now()) {
+		deleteToken(token)
+		return 0
 	}
 
 	_, err = db.Exec("UPDATE token SET time = NOW() WHERE client_id = $1", client)
@@ -32,4 +39,11 @@ func GetClientByToken(token string) int {
 	}
 
 	return client
+}
+
+func deleteToken(token string) {
+	_, err := db.Exec("DELETE FROM token WHERE token = $1", token)
+	if err != nil {
+		panic(err)
+	}
 }

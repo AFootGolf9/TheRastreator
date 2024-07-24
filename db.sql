@@ -27,8 +27,3 @@ create table position(
     long numeric(10, 7) not null,
     foreign key (client_id) references client(id)
 );
-
-
-grant select on all tables in schema public to expl;
-grant insert on all tables in schema public to expl;
-grant update on all tables in schema public to expl;
