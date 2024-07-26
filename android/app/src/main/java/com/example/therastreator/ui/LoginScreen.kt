@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -24,49 +25,74 @@ import androidx.compose.ui.unit.dp
     showBackground = true)
 @Composable
 fun LoginScreen(
-    uiState: AppUiState = AppUiState(user = "user", pass = "pass"),
+    uiState: AppUiState = AppUiState(user = "user", pass = "pass", fail = true),
     changeUser: (String) -> Unit = {},
     changePass: (String) -> Unit = {},
     submit: () -> Unit = {},
+    goToReg: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        Card(
-            modifier = modifier.fillMaxWidth()
-                .wrapContentHeight()
-                .padding(20.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(15.dp)
+            Card(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(20.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
             ) {
-                InputLine(
-                    tipe = "User",
-                    content = uiState.user,
-                    action = changeUser,
-                    modifier = modifier.fillMaxWidth()
-                )
-                InputLine(
-                    tipe = "Password",
-                    content = uiState.pass,
-                    action = changePass,
-                    modifier = modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(15.dp))
-                Button(
-                    onClick = submit,
-                    shape = ButtonDefaults.elevatedShape,
-                    modifier = Modifier.fillMaxWidth()
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(15.dp)
                 ) {
-                    Text(text = "submit")
+                    InputLine(
+                        tipe = "User",
+                        content = uiState.user,
+                        action = changeUser,
+                        modifier = modifier.fillMaxWidth()
+                    )
+                    InputLine(
+                        tipe = "Password",
+                        content = uiState.pass,
+                        action = changePass,
+                        modifier = modifier.fillMaxWidth()
+                    )
+
+                    if (uiState.fail) {
+                        Text(
+                            text = "user or password wrong",
+                            color = Color.Red
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Button(
+                        onClick = submit,
+                        shape = ButtonDefaults.elevatedShape,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "submit")
+                    }
                 }
+            }
+
+            Button(
+                onClick = goToReg,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor =  Color.Black.copy(
+                        alpha = 0F
+                    ),
+                    contentColor = Color.Cyan
+                )
+            ) {
+                Text(text = "Or create a new account")
             }
         }
     }

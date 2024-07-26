@@ -4,7 +4,6 @@ import (
 	"AFootGolf9/TheRastreator/entity"
 	"AFootGolf9/TheRastreator/repository"
 	"AFootGolf9/TheRastreator/util"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +36,6 @@ func NewUser(c *gin.Context) {
 	var user entity.UserJson
 	c.BindJSON(&user)
 	if repository.GetUserByName(user.User) != nil {
-		fmt.Print("passou aqui")
 		c.JSON(400, gin.H{
 			"error": "User already exists",
 		})

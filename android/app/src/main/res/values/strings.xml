@@ -4,5 +4,6 @@
     <string name="on">on</string>
     <string name="off">off</string>
     <string name="loginOp">Register or Login</string>
+    <string name="register">Create new user</string>
     <string name="back_button">back_button</string>
 </resources>

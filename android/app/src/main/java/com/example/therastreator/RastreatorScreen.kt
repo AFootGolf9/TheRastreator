@@ -29,11 +29,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.therastreator.ui.AppViewModel
 import com.example.therastreator.ui.LoginScreen
+import com.example.therastreator.ui.RegisterScreen
 import com.example.therastreator.ui.SelectScreen
 
 enum class RastreatorScreen(@StringRes val title: Int) {
     Login(title = R.string.loginOp),
-    Select(title = R.string.app_name)
+    Select(title = R.string.app_name),
+    Register(title = R.string.register)
 }
 
 
@@ -69,7 +71,7 @@ fun RastreatorApp(
     viewModel: AppViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    viewModel.doFirst(LocalContext.current)
+    val start = viewModel.doFirst(LocalContext.current)
     val backStackEntry by  navController.currentBackStackEntryAsState()
 
     val currentScreen = RastreatorScreen.valueOf(
@@ -86,9 +88,15 @@ fun RastreatorApp(
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
 
+        val sLocation = if (start) {
+            RastreatorScreen.Select.name
+        } else {
+            RastreatorScreen.Login.name
+        }
+
         NavHost(
             navController = navController,
-            startDestination = RastreatorScreen.Login.name,
+            startDestination = sLocation,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -100,6 +108,20 @@ fun RastreatorApp(
                     buttonPress = { viewModel.changeActivated() }
                 )
             }
+
+            composable(route = RastreatorScreen.Register.name) {
+                RegisterScreen(
+                    uiState = uiState,
+                    changeUser = { tx -> viewModel.changeUser(tx)},
+                    changeEmail = { tx -> viewModel.changeEmail(tx)},
+                    changePass = { tx -> viewModel.changePass(tx)},
+                    submit = { if (viewModel.submitRegister()) {
+                                navController.navigateUp()
+                             }
+                    }
+                )
+            }
+
             composable(route = RastreatorScreen.Login.name) {
                 LoginScreen(
                     uiState,
@@ -108,7 +130,8 @@ fun RastreatorApp(
                     { if (viewModel.submitLogin()){
                         navController.navigate(RastreatorScreen.Select.name)
                     }
-                    }
+                    },
+                    { navController.navigate(RastreatorScreen.Register.name) }
                 )
             }
         }

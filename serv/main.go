@@ -18,8 +18,8 @@ func main() {
 	repository.SetDB(database)
 
 	r := gin.Default()
-	r.POST("/authenticate", controller.Autenticate)
-	r.POST("/newuser", controller.NewUser)
+	r.POST("/login", controller.Autenticate)
+	r.POST("/create", controller.NewUser)
 	r.POST("/register", controller.Register)
 
 	r.Run(":8080")

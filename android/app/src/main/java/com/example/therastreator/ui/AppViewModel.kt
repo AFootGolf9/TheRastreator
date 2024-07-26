@@ -7,7 +7,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import com.example.therastreator.data.ConfigRepository
+import com.example.therastreator.data.LoginJson
 import com.example.therastreator.data.WorkManagerSendRepository
+import com.example.therastreator.network.LoginApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +32,7 @@ class AppViewModel : ViewModel() {
 
     private lateinit var sendRepository: WorkManagerSendRepository
 
-    fun doFirst(context: Context) {
+    fun doFirst(context: Context): Boolean {
         configRepository = ConfigRepository(context.dataStore)
         runBlocking {
             _uiState.update { currentState ->
@@ -38,6 +40,10 @@ class AppViewModel : ViewModel() {
             }
         }
         sendRepository = WorkManagerSendRepository(context)
+
+        return runBlocking {
+            return@runBlocking !configRepository.token.first().equals("")
+        }
     }
 
     fun changeActivated() {
@@ -60,6 +66,12 @@ class AppViewModel : ViewModel() {
         }
     }
 
+    fun changeEmail(email: String) {
+        _uiState.update { currentState ->
+            currentState.copy(email = email)
+        }
+    }
+
     fun changePass(pass: String) {
         _uiState.update { currentState ->
             currentState.copy(pass = pass)
@@ -68,9 +80,55 @@ class AppViewModel : ViewModel() {
     }
 
     fun submitLogin(): Boolean {
+
+        val loginInfo = LoginJson(user = _uiState.value.user, pass = _uiState.value.pass)
+        var response: LoginJson
+
+        try {
+            runBlocking {
+                response = LoginApi.retrofitService.login(loginInfo)
+            }
+        } catch (e: Exception) {
+//            do nothing
+            response = LoginJson(error = "yes")
+        }
+
+        if (response.error != null) {
+            _uiState.update { currentState ->
+                currentState.copy(fail = true)
+            }
+            return false
+        }
+
+        val token: String = response.token!!
+
+        runBlocking {
+            configRepository.saveToken(token)
+        }
+
         _uiState.update { currentState ->
             currentState.copy(user = "", pass = "")
         }
+        return true
+    }
+
+    fun submitRegister(): Boolean {
+
+        val userInfo = LoginJson(
+            user = _uiState.value.user,
+            email = _uiState.value.email,
+            pass = _uiState.value.pass
+        )
+
+        val response: LoginJson
+        runBlocking {
+            response = LoginApi.retrofitService.create(userInfo)
+        }
+
+        if (response.error != null) {
+            return false
+        }
+
         return true
     }
 

@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 private const val BASE_URL =
-    "http://192.168.0.109:8080/user"
+    "http://192.168.0.109:8080"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
@@ -15,14 +15,12 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface LoginAPIService {
-    @POST("validate")
-    fun validate(@Body body: LoginJson): LoginJson
 
     @POST("login")
-    fun login(@Body body: LoginJson): LoginJson
+    suspend fun login(@Body body: LoginJson): LoginJson
 
     @POST("create")
-    fun create(@Body body: LoginJson): LoginJson
+    suspend fun create(@Body body: LoginJson): LoginJson
 }
 
 object LoginApi {

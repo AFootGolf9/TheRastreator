@@ -2,12 +2,10 @@ package repository
 
 import (
 	"AFootGolf9/TheRastreator/util"
-	"fmt"
 	"time"
 )
 
 func NewToken(client int) string {
-	fmt.Print(client)
 	token := util.RandomToken()
 	_, err := db.Exec("INSERT INTO token (token, client_id) VALUES ($1, $2)", token, client)
 	if err != nil {
