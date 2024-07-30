@@ -6,7 +6,8 @@ import (
 )
 
 func InsertUser(user entity.UserJson) {
-	_, err := db.Exec("INSERT INTO client (username, email, password) VALUES ($1, $2, $3)", user.User, user.Email, util.Encript(user.Pass))
+	_, err := db.Exec("INSERT INTO client (username, email, password) VALUES ($1, $2, $3)",
+		user.User, user.Email, util.Encript(user.Pass))
 	if err != nil {
 		panic(err)
 	}

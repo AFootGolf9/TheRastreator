@@ -2,13 +2,10 @@ package com.example.therastreator.ui
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
-import com.example.therastreator.data.ConfigRepository
 import com.example.therastreator.data.LoginJson
 import com.example.therastreator.data.WorkManagerSendRepository
+import com.example.therastreator.data.confRep
 import com.example.therastreator.network.LoginApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,15 +14,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 
-
-private const val CONFIG_NAME = "user_config"
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = CONFIG_NAME
-)
-
-lateinit var configRepository: ConfigRepository
-
 class AppViewModel : ViewModel() {
+
 
     private val _uiState = MutableStateFlow(AppUiState())
     val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
@@ -33,16 +23,16 @@ class AppViewModel : ViewModel() {
     private lateinit var sendRepository: WorkManagerSendRepository
 
     fun doFirst(context: Context): Boolean {
-        configRepository = ConfigRepository(context.dataStore)
+        confRep.setCont(context)
         runBlocking {
             _uiState.update { currentState ->
-                currentState.copy(activated = configRepository.isOn.first())
+                currentState.copy(activated = confRep.configRepository.isOn.first())
             }
         }
         sendRepository = WorkManagerSendRepository(context)
 
         return runBlocking {
-            return@runBlocking !configRepository.token.first().equals("")
+            return@runBlocking !confRep.configRepository.token.first().equals("")
         }
     }
 
@@ -56,7 +46,7 @@ class AppViewModel : ViewModel() {
             sendRepository.stop()
         }
         runBlocking {
-            configRepository.savePreference(_uiState.value.activated)
+            confRep.configRepository.savePreference(_uiState.value.activated)
         }
     }
 
@@ -103,7 +93,7 @@ class AppViewModel : ViewModel() {
         val token: String = response.token!!
 
         runBlocking {
-            configRepository.saveToken(token)
+            confRep.configRepository.saveToken(token)
         }
 
         _uiState.update { currentState ->
@@ -132,4 +122,9 @@ class AppViewModel : ViewModel() {
         return true
     }
 
+    fun endSession() {
+        runBlocking {
+            confRep.configRepository.saveToken("")
+        }
+    }
 }

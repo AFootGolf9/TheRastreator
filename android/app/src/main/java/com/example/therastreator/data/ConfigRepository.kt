@@ -1,5 +1,6 @@
 package com.example.therastreator.data
 
+import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
@@ -8,6 +9,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -58,6 +60,20 @@ class ConfigRepository(
         dataStore.edit { preferences ->
             preferences[TOKEN] = token
         }
+    }
+}
+
+object confRep {
+
+    const val CONFIG_NAME = "user_config"
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+        name = CONFIG_NAME
+    )
+
+    lateinit var configRepository: ConfigRepository
+
+    fun setCont(context: Context) {
+        configRepository = ConfigRepository(context.dataStore)
     }
 
 }

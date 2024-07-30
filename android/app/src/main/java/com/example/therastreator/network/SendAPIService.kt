@@ -15,7 +15,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface SendAPIService {
-    @POST("location")
+    @POST("register")
     suspend fun postLocation(@Body body: LocationJson): String
 }
 

@@ -25,20 +25,24 @@ import com.example.therastreator.R
 @Composable
 fun SelectScreen(
     b: Boolean = false,
-    buttonPress: () -> Unit = {}
+    buttonPress: () -> Unit = {},
+    logOf: () -> Unit = {}
 ) {
     AppBody(modifier = Modifier
         .fillMaxSize()
         .wrapContentSize(),
         b = b,
-        buttonPress = buttonPress)
+        buttonPress = buttonPress,
+        logOf = logOf
+    )
 }
 
 @Composable
 fun AppBody(
     modifier: Modifier = Modifier,
     b: Boolean,
-    buttonPress: () -> Unit
+    buttonPress: () -> Unit,
+    logOf: () -> Unit
 ) {
 
     val color = when (b) {
@@ -55,14 +59,15 @@ fun AppBody(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = {
-            buttonPress()
-        },
+        Button(onClick = buttonPress,
             colors = ButtonColors(color, Color.White, Color.LightGray, Color.DarkGray)
         ) {
             Text(stringResource(R.string.turn))
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = text, fontSize = 20.sp)
+        Button(onClick = logOf) {
+            Text(text = stringResource(R.string.log_of))
+        }
     }
 }

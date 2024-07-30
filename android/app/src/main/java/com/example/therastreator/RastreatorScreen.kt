@@ -105,7 +105,12 @@ fun RastreatorApp(
             composable(route = RastreatorScreen.Select.name) {
                 SelectScreen(
                     b = uiState.activated,
-                    buttonPress = { viewModel.changeActivated() }
+                    buttonPress = { viewModel.changeActivated() },
+                    logOf = {
+                        viewModel.endSession()
+                        navController.navigate(RastreatorScreen.Login.name)
+                        navController.clearBackStack(RastreatorScreen.Select.name)
+                    }
                 )
             }
 
@@ -138,3 +143,6 @@ fun RastreatorApp(
     }
 }
 
+object confRep {
+
+}
