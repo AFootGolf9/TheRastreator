@@ -110,21 +110,28 @@ class AppViewModel : ViewModel() {
             pass = _uiState.value.pass
         )
 
-        val response: LoginJson
-        runBlocking {
-            response = LoginApi.retrofitService.create(userInfo)
+        var response: LoginJson
+
+        try {
+            runBlocking {
+                response = LoginApi.retrofitService.create(userInfo)
+            }
+        } catch (e: Exception) {
+            response = LoginJson(error = "yes")
         }
 
-        if (response.error != null) {
-            return false
-        }
-
-        return true
+        return response.error == null
     }
 
     fun endSession() {
         runBlocking {
             confRep.configRepository.saveToken("")
+        }
+    }
+
+    fun eraseFail() {
+        _uiState.update { currentState ->
+            currentState.copy(fail = false)
         }
     }
 }

@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+
+	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 
 	"AFootGolf9/TheRastreator/controller"
@@ -18,9 +21,16 @@ func main() {
 	repository.SetDB(database)
 
 	r := gin.Default()
+
+	r.GET("/test", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "Hello World",
+		})
+	})
 	r.POST("/login", controller.Autenticate)
 	r.POST("/create", controller.NewUser)
 	r.POST("/register", controller.Register)
 
-	r.Run(":8080")
+	// TODO: get a URL for letsencrypt
+	log.Fatal(autotls.Run(r, ""))
 }

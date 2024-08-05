@@ -59,6 +59,8 @@ fun AppBody(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Spacer(modifier = Modifier.height(224.dp))
         Button(onClick = buttonPress,
             colors = ButtonColors(color, Color.White, Color.LightGray, Color.DarkGray)
         ) {
@@ -66,6 +68,8 @@ fun AppBody(
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = text, fontSize = 20.sp)
+
+        Spacer(modifier = Modifier.height(200.dp))
         Button(onClick = logOf) {
             Text(text = stringResource(R.string.log_of))
         }

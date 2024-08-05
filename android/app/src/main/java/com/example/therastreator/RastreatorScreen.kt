@@ -132,11 +132,15 @@ fun RastreatorApp(
                     uiState,
                     { tx -> viewModel.changeUser(tx) },
                     { tx -> viewModel.changePass(tx) },
-                    { if (viewModel.submitLogin()){
-                        navController.navigate(RastreatorScreen.Select.name)
-                    }
+                    {
+                        if (viewModel.submitLogin()){
+                            navController.navigate(RastreatorScreen.Select.name)
+                        }
                     },
-                    { navController.navigate(RastreatorScreen.Register.name) }
+                    {
+                        viewModel.eraseFail()
+                        navController.navigate(RastreatorScreen.Register.name)
+                    }
                 )
             }
         }
