@@ -1,9 +1,6 @@
 package main
 
 import (
-	"log"
-
-	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 
 	"AFootGolf9/TheRastreator/controller"
@@ -32,5 +29,7 @@ func main() {
 	r.POST("/register", controller.Register)
 
 	// TODO: get a URL for letsencrypt
-	log.Fatal(autotls.Run(r, ""))
+	// log.Fatal(autotls.Run(r, ""))
+
+	r.Run(":8080")
 }

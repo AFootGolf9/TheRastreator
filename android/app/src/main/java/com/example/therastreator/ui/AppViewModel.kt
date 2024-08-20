@@ -120,7 +120,18 @@ class AppViewModel : ViewModel() {
             response = LoginJson(error = "yes")
         }
 
-        return response.error == null
+        if (response.error != null) {
+            _uiState.update { currentState ->
+                currentState.copy(fail = true)
+            }
+            return false
+        }
+
+        _uiState.update { currentState ->
+            currentState.copy(user = "", pass = "")
+        }
+
+        return true
     }
 
     fun endSession() {
