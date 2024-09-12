@@ -54,3 +54,29 @@ func NewUser(c *gin.Context) {
 		"status": "User created successfully!",
 	})
 }
+
+func ValidateToken(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")
+	if token == "" {
+		c.JSON(401, gin.H{
+			"error": "Token not found",
+		})
+		return
+	}
+
+	id := repository.GetClientByToken(token)
+
+	if id == 0 {
+		c.JSON(401, gin.H{
+			"error": "Invalid token",
+		})
+		return
+	}
+
+	username := repository.GetUsernameById(id)
+
+	c.JSON(200, gin.H{
+		"username": username,
+	})
+
+}

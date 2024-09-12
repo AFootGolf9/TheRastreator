@@ -24,6 +24,7 @@ func main() {
 			"message": "Hello World",
 		})
 	})
+	r.GET("/login", controller.ValidateToken)
 	r.POST("/login", controller.Autenticate)
 	r.POST("/create", controller.NewUser)
 	r.POST("/register", controller.Register)
