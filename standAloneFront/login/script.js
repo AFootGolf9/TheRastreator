@@ -16,20 +16,23 @@ async function login(){
         method: 'POST',
         mode: 'no-cors',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             user: name,
             pass: password
         })
-    }).then(response => (response) => {
-        document.cookie = `token=${response.token}; path=/`
-        console.log("setou o cookie")
-        document.getElementById("test").innerHTML = response
+    })
+    // .then(response => response.json()).then((data) => {
+    //     console.log('Success:', data);
+    //     document.cookie = `token=${data.token}`
+    //     window.location.href = "/home"
+    // }).catch((error) => {
+    //     console.error('Error:', error);
+    // });
 
-        // window.location.href = "/"
-    }   
-    ).catch((error) => {
-        console.error('Error:', error);
-    });
+    await response
+    console.log(response)
+    data = await response.json()
+    console.log(data)
 }

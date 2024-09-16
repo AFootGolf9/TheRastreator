@@ -2,6 +2,7 @@ package controller
 
 import (
 	"AFootGolf9/TheRastreator/entity"
+	"AFootGolf9/TheRastreator/logger"
 	"AFootGolf9/TheRastreator/repository"
 	"AFootGolf9/TheRastreator/util"
 
@@ -22,6 +23,7 @@ func Autenticate(c *gin.Context) {
 	if validateUser(user.User, user.Pass) {
 		user = *repository.GetUserByName(user.User)
 		token := repository.NewToken(user.Id)
+		logger.Log("User " + user.User + " logged in")
 		c.JSON(200, gin.H{
 			"token": token,
 		})
