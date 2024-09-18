@@ -27,7 +27,6 @@ function register(){
 
     fetch('http://localhost:8080/create', {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
         },

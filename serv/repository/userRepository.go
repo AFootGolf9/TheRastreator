@@ -54,10 +54,11 @@ func GetUserIdByName(user string) int {
 }
 
 func GetUsernameById(id int) string {
-	row := db.QueryRow("SELECT username FROM client WHERE client_id = $1", id)
+	row := db.QueryRow("SELECT username FROM client WHERE id = $1", id)
 
 	var username string
 	err := row.Scan(&username)
+
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
 			return ""

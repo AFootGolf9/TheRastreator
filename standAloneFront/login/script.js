@@ -14,7 +14,7 @@ async function login(){
 
     const response = await fetch('http://localhost:8080/login', {
         method: 'POST',
-        mode: 'no-cors',
+        // mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -22,17 +22,15 @@ async function login(){
             user: name,
             pass: password
         })
-    })
-    // .then(response => response.json()).then((data) => {
-    //     console.log('Success:', data);
-    //     document.cookie = `token=${data.token}`
-    //     window.location.href = "/home"
-    // }).catch((error) => {
-    //     console.error('Error:', error);
-    // });
+    }).then(response => response.json()).then((data) => {
+        console.log('Success:', data);
+        document.cookie = `token=${data.token}; samesite=lax; path=/`
+        window.location.href = "/"
+    }).catch((error) => {
+        console.error('Error:', error);
+    });
 
-    await response
-    console.log(response)
-    data = await response.json()
-    console.log(data)
+    // await response
+    // data = await response.json()
+    // console.log(data)
 }

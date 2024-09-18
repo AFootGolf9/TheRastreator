@@ -3,20 +3,18 @@ async function verifyLogin() {
 
     request = fetch('http://localhost:8080/login', {
         method: 'GET',
-        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': coockie
         }
-    })
-
-    await request
-    if(!request.ok){
-        console.log(coockie)
-        // window.location.href = "/login"
-    }else{
-        document.getElementById("test").innerHTML = "Welcome ${request.username}"
-    }
+    }).then(async response => {
+        if (response.ok) {
+            var data = await response.json()
+            document.getElementById('mainDiv').innerHTML = data.username;
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }).catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+    });
 }
-
-verifyLogin()

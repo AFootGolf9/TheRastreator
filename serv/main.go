@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"AFootGolf9/TheRastreator/controller"
@@ -18,6 +19,11 @@ func main() {
 	repository.SetDB(database)
 
 	r := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowHeaders = []string{"Authorization", "Origin", "Content-Length", "Content-Type"}
+	r.Use(cors.New(config))
 
 	r.GET("/test", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
