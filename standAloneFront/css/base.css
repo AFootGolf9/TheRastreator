@@ -1,3 +1,12 @@
 .background{
-    background-image: url("https://www.wallpaperflare.com/static/902/866/448/blue-colorful-dark-simple-wallpaper.jpg");
+    background-color: rgb(206, 206, 206); 
+}
+
+.title{
+    font-size: 4vmax;
+    font-weight: bold;
+    font-family: "Georgia", Serif;
+    position: fixed;
+    top: 5vh;
+    left: 3vw;
 }
