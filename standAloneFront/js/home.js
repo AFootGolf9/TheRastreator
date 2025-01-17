@@ -10,7 +10,7 @@ async function verifyLogin() {
     }).then(async response => {
         if (response.ok) {
             var data = await response.json()
-            document.getElementById('mainDiv').innerHTML = data.username;
+            document.getElementById('test').innerHTML = data.username;
         } else {
             throw new Error('Something went wrong');
         }
