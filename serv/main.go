@@ -25,15 +25,12 @@ func main() {
 	config.AllowHeaders = []string{"Authorization", "Origin", "Content-Length", "Content-Type"}
 	r.Use(cors.New(config))
 
-	r.GET("/test", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
+	r.GET("/test", controller.Test)
 	r.GET("/login", controller.ValidateToken)
 	r.POST("/login", controller.Autenticate)
 	r.POST("/create", controller.NewUser)
 	r.POST("/register", controller.Register)
+	r.GET("/locations", controller.GetLocationsWithParams)
 
 	// TODO: get a URL for letsencrypt
 	// log.Fatal(autotls.Run(r, ""))
