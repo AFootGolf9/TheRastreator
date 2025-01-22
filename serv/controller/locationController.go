@@ -38,11 +38,36 @@ func GetLocationsWithParams(c *gin.Context) {
 		return
 	}
 
-	if location.FinalTime.IsZero() {
-		location.FinalTime = time.Now().Add(time.Hour * 1)
+	if location.InitialTime == "" {
+		location.InitialTime = "0001-01-01 00:00:00"
+	}
+	if location.FinalTime == "" {
+		location.FinalTime = "0001-01-01 00:00:00"
 	}
 
-	locations := repository.GetLocationsWithFullParams(location.InitialTime, location.FinalTime, id)
+	initialTime, err := time.Parse("2006-01-02 15:04:05", location.InitialTime)
+
+	if err != nil {
+		c.JSON(401, gin.H{
+			"error": "Invalid initial time",
+		})
+		return
+	}
+
+	finalTime, err := time.Parse("2006-01-02 15:04:05", location.FinalTime)
+
+	if err != nil {
+		c.JSON(401, gin.H{
+			"error": "Invalid final time",
+		})
+		return
+	}
+
+	if finalTime.IsZero() {
+		finalTime = time.Now().Add(time.Hour * 1)
+	}
+
+	locations := repository.GetLocationsWithFullParams(initialTime, finalTime, id)
 
 	c.JSON(200, gin.H{
 		"locations": locations,

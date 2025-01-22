@@ -1,20 +1,15 @@
 package controller
 
-import (
-	"AFootGolf9/TheRastreator/entity"
-	"time"
+// func Test(c *gin.Context) {
 
-	"github.com/gin-gonic/gin"
-)
+// 	var location entity.LocationQuery
+// 	c.BindJSON(&location)
 
-func Test(c *gin.Context) {
+// 	// timeTest:= time.Parse("2006-01-02 15:04:05", "2021-01-01 00:00:00")
 
-	var location entity.LocationQuery
-	c.BindJSON(&location)
+// 	// out := location.FinalTime == time.Time{}
 
-	out := location.FinalTime == time.Time{}
-
-	c.JSON(200, gin.H{
-		"status": out,
-	})
-}
+// 	c.JSON(200, gin.H{
+// 		"status": out,
+// 	})
+// }
