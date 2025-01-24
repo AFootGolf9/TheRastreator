@@ -18,7 +18,7 @@ async function makeMap() {
     }).then(async response => {
         if (response.ok) {
             var data = await response.json()
-            mapSpace.innerHTML = data.locations[0].latitude;
+            mapSpace.innerHTML = await makeStringTest(data.locations);
         } else {
             throw new Error('Something went wrong');
         }
@@ -48,4 +48,17 @@ async function checkLogin() {
     }).catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
     });
+}
+
+async function makeStringTest(jsonList) {
+    console.log("passed here 1")
+    out = ""
+    for (i = 0; i < jsonList.length; i++) {
+        console.log("passed here 2")
+        out += "<br>";
+        for (key in jsonList[i]) {
+            out += key + ": " + jsonList[i][key] + "<br>";
+        }
+    }
+    return out;
 }
