@@ -34,9 +34,26 @@
 
             <div class="col-4">
                 <div class="card margin">
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        <h2>Start Filter</h2>
+                        <label for="startDate">Start Date</label>
+                        <input id="startDate" class="form-control" type="date" value="2025-01-01">
+
+                        <label for="startTime">StartTime</label>
+                        <input id="startTime" class="form-control" type="time" value="01:00">
+                    </div>
                 </div>
-                <button class="btn btn-outline-secondary btn-lg">Filter</button>
+                <div class="card margin">
+                    <div class="card-body">
+                        <h2>End Filter</h2>
+                        <label for="endDate">End Date</label>
+                        <input id="endDate" class="form-control" type="date" value="2025-01-01">
+
+                        <label for="endTime">EndTime</label>
+                        <input id="endTime" class="form-control" type="time" value="01:00">
+                    </div>
+                </div>
+                <button class="btn btn-outline-secondary btn-lg margin w-100" onclick="testDateAndTime()">Filter</button>
             </div>
 
             <div class="test card margin col-8" id="mapSpace"></div>

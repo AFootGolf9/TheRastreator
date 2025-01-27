@@ -62,3 +62,10 @@ async function makeStringTest(jsonList) {
     }
     return out;
 }
+
+async function testDateAndTime() {
+    dateValue = document.getElementById('startDate').value;
+    timeValue = document.getElementById('startTime').value;
+    console.log(dateValue);
+    console.log(timeValue);
+}
