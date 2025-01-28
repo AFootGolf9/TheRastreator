@@ -1,3 +1,10 @@
+function getTime(filter) {
+    dateValue = document.getElementById(filter+'Date').value;
+    timeValue = document.getElementById(filter+'Time').value;
+
+    return dateValue + " " + timeValue + ":00";
+}
+
 async function makeMap() {
     token = getCookie("token");
 
@@ -7,13 +14,18 @@ async function makeMap() {
         return;
     }
 
+    startTime = getTime('start');
+    endTime = getTime('end');
+
     request = fetch('http://localhost:8080/locations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            'token': token
+            'token': token,
+            'initial_time': startTime,
+            'final_time': endTime
         })
     }).then(async response => {
         if (response.ok) {
