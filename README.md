@@ -15,7 +15,28 @@ May be Used to rebember previos locations or to localize a lost device.
 * [![Kotlin][Kotlin]][Kotlin-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
+## Getting Started
+//To Do
 
+### Prerequisites
+
+* Go
+* Android Studio
+* Browser
+
+## Usage
+//To Do
+
+![Web HomePage](/res/HomeWeb.png)
+![Login Web](/res/LoginWeb.png)
+![Register Web](/res/RegisterWeb.png)
+![Map](/res/MapSreen.png)
+![Register Mobile](/res/RegisterMobile.jpg)
+![Login Mobile](/res/LoginMobile.jpg)
+![Mobile](/res/MobileOn.jpg)
+
+## Roadmap
+//To Do
 
 
 
