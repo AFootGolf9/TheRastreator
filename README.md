@@ -36,9 +36,11 @@ May be Used to rebember previos locations or to localize a lost device.
 ![Mobile](/res/MobileOn.jpg)
 
 ## Roadmap
-//To Do
 
-
+- [x] Account creation
+- [x] Android track App
+- [x] Web App
+- [ ] Dynamic map for web app
 
 
 
