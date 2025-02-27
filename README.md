@@ -4,7 +4,7 @@
 
 ## About The Project
 
-System that permits users create accounts and use then to save and query previos locations that was a specific device.
+System that permits users create accounts and use then to save and query previous locations that was a specific device.
 
 May be Used to rebember previos locations or to localize a lost device.
 
